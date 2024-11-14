@@ -1,15 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zajaddad <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/12 02:48:31 by zajaddad          #+#    #+#             */
-/*   Updated: 2024/11/14 23:48:26 by zajaddad         ###   ########.fr       */
+/*   Created: 2024/11/14 11:59:07 by zajaddad          #+#    #+#             */
+/*   Updated: 2024/11/14 20:12:44 by zajaddad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "get_next_line.h"
+#include <sys/resource.h>
+#include <sys/syslimits.h>
 
 int	get_new_line_index(char *s)
 {
@@ -94,23 +97,22 @@ char	*read_line(int fd, char *result, int *index)
 
 char	*get_next_line(int fd)
 {
-	static char	*rest = NULL;
+	static char	*rest[OPEN_MAX] = {NULL};
 	char		*buffer;
 	char		*line;
 	int			i;
 
 	i = 0;
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
-		return (free(rest), rest = NULL);
-	buffer = read_line(fd, rest, &i);
+		return (free(rest[fd]), rest[fd] = NULL);
+	buffer = read_line(fd, rest[fd], &i);
 	if (buffer == NULL || *buffer == 0)
-		return (free(rest), rest = NULL);
-	rest = ft_strdup(buffer + i);
+		return (free(rest[fd]), rest[fd] = NULL, NULL);
+	rest[fd] = ft_strdup(buffer + i);
 	if (!i)
-		return (free(rest), rest = NULL, buffer);
+		return (free(rest[fd]), rest[fd] = NULL, buffer);
 	line = ft_substr(buffer, 0, i);
 	if (line == NULL || *line == 0)
 		return (NULL);
 	return (free(buffer), line);
 }
-

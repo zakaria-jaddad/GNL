@@ -1,15 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zajaddad <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/05 19:28:33 by zajaddad          #+#    #+#             */
-/*   Updated: 2024/11/14 17:50:40 by zajaddad         ###   ########.fr       */
+/*   Created: 2024/11/14 12:34:25 by zajaddad          #+#    #+#             */
+/*   Updated: 2024/11/14 17:50:56 by zajaddad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "get_next_line.h"
+
+#include "get_next_line_bonus.h"
 
 size_t	ft_strlen(const char *s)
 {
