@@ -6,7 +6,7 @@
 /*   By: zajaddad <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 02:48:31 by zajaddad          #+#    #+#             */
-/*   Updated: 2024/11/13 23:51:36 by zajaddad         ###   ########.fr       */
+/*   Updated: 2024/11/14 11:30:25 by zajaddad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,37 @@ char	*read_line(int fd, char *result)
 	return (content);
 }
 
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	size_t	len_s1;
+	size_t	len_s2;
+	char	*str;
+	size_t	i;
+	size_t	j;
+
+	if (s1 == NULL && s2 == NULL)
+		return (NULL);
+	if (s1 == NULL)
+		return (ft_strdup(s2));
+	if (s2 == NULL)
+		return (ft_strdup(s1));
+	len_s1 = ft_strlen(s1);
+	len_s2 = ft_strlen(s2);
+	i = 0;
+	str = (char *)ft_calloc(1, len_s1 + len_s2 + 1);
+	if (str == NULL)
+		return (NULL);
+	while (i < len_s1 && s1[i])
+	{
+		str[i] = s1[i];
+		i++;
+	}
+	j = 0;
+	while (j < len_s2 && s2[j])
+		str[i++] = s2[j++];
+	return (str);
+}
+
 char	*get_next_line(int fd)
 {
 	static char	*rest = NULL;
@@ -79,8 +110,8 @@ char	*get_next_line(int fd)
 	i = get_new_line_index(buffer);
 	rest = ft_strdup(buffer + i);
 	if (!i)
-		return (line = ft_strdup(buffer),
-			free(buffer), free(rest), rest = NULL, line);
+		return (line = ft_strdup(buffer), free(buffer), free(rest), rest = NULL,
+			line);
 	line = ft_substr(buffer, 0, i);
 	if (line == NULL || *line == 0)
 		return (NULL);

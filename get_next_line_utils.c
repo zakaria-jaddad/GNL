@@ -6,7 +6,7 @@
 /*   By: zajaddad <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 19:28:33 by zajaddad          #+#    #+#             */
-/*   Updated: 2024/11/14 10:43:02 by zajaddad         ###   ########.fr       */
+/*   Updated: 2024/11/14 11:07:49 by zajaddad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line.h"
@@ -59,33 +59,11 @@ char	*ft_strdup(const char *s1)
 	return (ptr);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	size_t	len_s1;
-	size_t	len_s2;
-	char	*str;
-
-	if (s1 == NULL && s2 == NULL)
-		return (NULL);
-	if (s1 == NULL)
-		return (ft_strdup(s2));
-	if (s2 == NULL)
-		return (ft_strdup(s1));
-	len_s1 = ft_strlen(s1);
-	len_s2 = ft_strlen(s2);
-	str = (char *)malloc(len_s1 + len_s2 + 1);
-	if (str == NULL)
-		return (NULL);
-	// watchout
-	(void)strlcpy(str, s1, len_s1 + 1);
-	(void)strlcat(str, s2, len_s1 + len_s2 + 1);
-	return (str);
-}
-
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	unsigned int	s_len;
 	char			*substr;
+	size_t			i;
 
 	if (s == NULL)
 		return (NULL);
@@ -97,9 +75,9 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	substr = (char *)malloc(len + 1);
 	if (substr == NULL)
 		return (NULL);
-	// watchout
-	memcpy(substr, &s[start], len);
-	substr[len] = 0;
+	i = 0;
+	while (i < len && s[start])
+		substr[i++] = s[start++];
+	substr[i] = 0;
 	return (substr);
 }
-
