@@ -6,7 +6,7 @@
 /*   By: zajaddad <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 02:48:31 by zajaddad          #+#    #+#             */
-/*   Updated: 2024/11/15 23:18:10 by zajaddad         ###   ########.fr       */
+/*   Updated: 2024/11/15 23:26:10 by zajaddad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line.h"
@@ -71,7 +71,8 @@ char	*read_line(int fd, char *result, int *index)
 	char	*buffer;
 	char	*content;
 
-	if (result && (*index = get_new_line_index(result)))
+	*index = get_new_line_index(result);
+	if (result && *index)
 		return (result);
 	content = result;
 	while (1)
@@ -86,7 +87,8 @@ char	*read_line(int fd, char *result, int *index)
 			break ;
 		}
 		join_content(&content, buffer);
-		if (content == NULL || (*index = get_new_line_index(content)))
+		*index = get_new_line_index(content);
+		if (content == NULL || *index)
 			break ;
 	}
 	return (content);
