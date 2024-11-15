@@ -6,7 +6,7 @@
 /*   By: zajaddad <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 12:38:44 by zajaddad          #+#    #+#             */
-/*   Updated: 2024/11/15 21:41:13 by zajaddad         ###   ########.fr       */
+/*   Updated: 2024/11/15 23:20:37 by zajaddad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,10 @@
 # include <unistd.h>
 
 char	*get_next_line(int fd);
-
 void	*ft_calloc(size_t count, size_t size);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strdup(const char *s1);
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlen(const char *s);
-
-typedef struct list 
-{
-	char *content;
-	struct list *next;
-} t_list;
 
 #endif

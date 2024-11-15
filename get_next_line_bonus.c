@@ -6,13 +6,10 @@
 /*   By: zajaddad <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 11:59:07 by zajaddad          #+#    #+#             */
-/*   Updated: 2024/11/14 20:12:44 by zajaddad         ###   ########.fr       */
+/*   Updated: 2024/11/15 23:23:08 by zajaddad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "get_next_line.h"
-#include <sys/resource.h>
-#include <sys/syslimits.h>
+#include "get_next_line_bonus.h"
 
 int	get_new_line_index(char *s)
 {
@@ -73,6 +70,7 @@ char	*read_line(int fd, char *result, int *index)
 {
 	char	*buffer;
 	char	*content;
+	int		n_read;
 
 	if (result && (*index = get_new_line_index(result)))
 		return (result);
@@ -82,7 +80,7 @@ char	*read_line(int fd, char *result, int *index)
 		buffer = (char *)ft_calloc(sizeof(char), (size_t)(BUFFER_SIZE + 1));
 		if (buffer == NULL)
 			return (free(content), NULL);
-		if (read(fd, buffer, BUFFER_SIZE) <= 0)
+		if ((n_read = read(fd, buffer, BUFFER_SIZE)) <= 0)
 		{
 			free(buffer);
 			result = NULL;
@@ -97,7 +95,7 @@ char	*read_line(int fd, char *result, int *index)
 
 char	*get_next_line(int fd)
 {
-	static char	*rest[OPEN_MAX] = {NULL};
+	static char	*rest[10240] = {NULL};
 	char		*buffer;
 	char		*line;
 	int			i;
@@ -106,13 +104,15 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
 		return (free(rest[fd]), rest[fd] = NULL);
 	buffer = read_line(fd, rest[fd], &i);
-	if (buffer == NULL || *buffer == 0)
-		return (free(rest[fd]), rest[fd] = NULL, NULL);
+	if (buffer == NULL)
+		return (rest[fd] = NULL);
+	if (*buffer == 0)
+		return (free(buffer), rest[fd] = NULL);
 	rest[fd] = ft_strdup(buffer + i);
 	if (!i)
 		return (free(rest[fd]), rest[fd] = NULL, buffer);
 	line = ft_substr(buffer, 0, i);
-	if (line == NULL || *line == 0)
-		return (NULL);
+	if (line == NULL)
+		return (free(buffer), free(rest[fd]), rest[fd] = NULL, buffer = NULL);
 	return (free(buffer), line);
 }

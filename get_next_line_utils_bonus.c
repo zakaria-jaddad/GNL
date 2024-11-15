@@ -6,10 +6,9 @@
 /*   By: zajaddad <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 12:34:25 by zajaddad          #+#    #+#             */
-/*   Updated: 2024/11/14 17:50:56 by zajaddad         ###   ########.fr       */
+/*   Updated: 2024/11/15 23:22:58 by zajaddad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "get_next_line_bonus.h"
 
 size_t	ft_strlen(const char *s)

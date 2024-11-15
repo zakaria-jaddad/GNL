@@ -6,11 +6,10 @@
 /*   By: zajaddad <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 02:48:31 by zajaddad          #+#    #+#             */
-/*   Updated: 2024/11/15 22:08:30 by zajaddad         ###   ########.fr       */
+/*   Updated: 2024/11/15 23:18:10 by zajaddad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line.h"
-#include <stdlib.h>
 
 int	get_new_line_index(char *s)
 {
@@ -116,4 +115,3 @@ char	*get_next_line(int fd)
 		return (free(buffer), free(rest), rest = NULL, buffer = NULL, NULL);
 	return (free(buffer), buffer = NULL, line);
 }
-

@@ -6,7 +6,7 @@
 /*   By: zajaddad <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 19:28:33 by zajaddad          #+#    #+#             */
-/*   Updated: 2024/11/15 22:10:06 by zajaddad         ###   ########.fr       */
+/*   Updated: 2024/11/15 23:20:51 by zajaddad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line.h"
@@ -47,7 +47,7 @@ char	*ft_strdup(const char *s1)
 	while (s1[len])
 		len++;
 	i = 0;
-	ptr = (char *)malloc(len + 1);
+	ptr = (char *)ft_calloc(1, len + 1);
 	if (ptr == NULL)
 		return (NULL);
 	while (s1[i])
@@ -55,7 +55,6 @@ char	*ft_strdup(const char *s1)
 		ptr[i] = s1[i];
 		i++;
 	}
-	ptr[i] = 0;
 	return (ptr);
 }
 
@@ -72,12 +71,11 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		return (ft_strdup(""));
 	if (len > s_len - start)
 		len = s_len - start;
-	substr = (char *)malloc(len + 1);
+	substr = (char *)ft_calloc(1, len + 1);
 	if (substr == NULL)
 		return (NULL);
 	i = 0;
 	while (i < len && s[start])
 		substr[i++] = s[start++];
-	substr[i] = 0;
 	return (substr);
 }
