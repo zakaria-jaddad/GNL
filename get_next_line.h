@@ -6,7 +6,7 @@
 /*   By: zajaddad <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 12:38:44 by zajaddad          #+#    #+#             */
-/*   Updated: 2024/11/14 12:38:45 by zajaddad         ###   ########.fr       */
+/*   Updated: 2024/11/15 21:41:13 by zajaddad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,11 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strdup(const char *s1);
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlen(const char *s);
+
+typedef struct list 
+{
+	char *content;
+	struct list *next;
+} t_list;
 
 #endif

@@ -6,10 +6,11 @@
 /*   By: zajaddad <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 02:48:31 by zajaddad          #+#    #+#             */
-/*   Updated: 2024/11/14 23:48:26 by zajaddad         ###   ########.fr       */
+/*   Updated: 2024/11/15 22:08:30 by zajaddad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line.h"
+#include <stdlib.h>
 
 int	get_new_line_index(char *s)
 {
@@ -103,14 +104,16 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
 		return (free(rest), rest = NULL);
 	buffer = read_line(fd, rest, &i);
-	if (buffer == NULL || *buffer == 0)
-		return (free(rest), rest = NULL);
+	if (buffer == NULL)
+		return (rest = NULL);
+	if (*buffer == 0)
+		return (free(buffer), rest = NULL);
 	rest = ft_strdup(buffer + i);
 	if (!i)
 		return (free(rest), rest = NULL, buffer);
 	line = ft_substr(buffer, 0, i);
-	if (line == NULL || *line == 0)
-		return (NULL);
-	return (free(buffer), line);
+	if (line == NULL)
+		return (free(buffer), free(rest), rest = NULL, buffer = NULL, NULL);
+	return (free(buffer), buffer = NULL, line);
 }
 
