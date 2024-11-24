@@ -6,10 +6,11 @@
 /*   By: zajaddad <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 19:28:33 by zajaddad          #+#    #+#             */
-/*   Updated: 2024/11/15 23:20:51 by zajaddad         ###   ########.fr       */
+/*   Updated: 2024/11/24 19:24:03 by zajaddad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line.h"
+#include <stdio.h>
 
 size_t	ft_strlen(const char *s)
 {

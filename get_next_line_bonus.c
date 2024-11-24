@@ -6,7 +6,7 @@
 /*   By: zajaddad <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 11:59:07 by zajaddad          #+#    #+#             */
-/*   Updated: 2024/11/15 23:28:42 by zajaddad         ###   ########.fr       */
+/*   Updated: 2024/11/24 19:57:57 by zajaddad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line_bonus.h"
@@ -54,12 +54,13 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (str);
 }
 
-void	join_content(char **content, char *buffer)
+void	join_content(char **content, char *buffer, int n_bytes)
 {
 	char	*content_place_holder;
 
 	if (content == NULL || buffer == NULL)
 		return ;
+	buffer[n_bytes] = 0;
 	content_place_holder = *content;
 	*content = ft_strjoin(content_place_holder, buffer);
 	free(buffer);
@@ -70,23 +71,24 @@ char	*read_line(int fd, char *result, int *index)
 {
 	char	*buffer;
 	char	*content;
+	int		n_bytes;
 
-	*index = get_new_line_index(result);
+	*index = get_new_line_index((content = result, result));
 	if (result && *index)
 		return (result);
-	content = result;
 	while (1)
 	{
-		buffer = (char *)ft_calloc(sizeof(char), (size_t)(BUFFER_SIZE + 1));
+		buffer = (char *)malloc(((size_t)BUFFER_SIZE) + 1);
 		if (buffer == NULL)
 			return (free(content), NULL);
-		if (read(fd, buffer, BUFFER_SIZE) <= 0)
+		n_bytes = read(fd, buffer, BUFFER_SIZE);
+		if (n_bytes <= 0)
 		{
 			free(buffer);
 			result = NULL;
 			break ;
 		}
-		join_content(&content, buffer);
+		join_content(&content, buffer, n_bytes);
 		*index = get_new_line_index(content);
 		if (content == NULL || *index)
 			break ;
@@ -102,7 +104,9 @@ char	*get_next_line(int fd)
 	int			i;
 
 	i = 0;
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
+	if (fd < 0)
+		return (NULL);
+	if (BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
 		return (free(rest[fd]), rest[fd] = NULL);
 	buffer = read_line(fd, rest[fd], &i);
 	if (buffer == NULL)
