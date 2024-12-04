@@ -6,7 +6,7 @@
 /*   By: zajaddad <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 02:48:31 by zajaddad          #+#    #+#             */
-/*   Updated: 2024/12/04 19:44:44 by zajaddad         ###   ########.fr       */
+/*   Updated: 2024/12/04 21:09:06 by zajaddad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line.h"
@@ -105,9 +105,7 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
 		return (free(rest), rest = NULL);
 	buffer = read_line(fd, rest, &i);
-	if (buffer == NULL)
-		return (rest = NULL);
-	if (*buffer == 0)
+	if (buffer == NULL || *buffer == 0)
 		return (free(buffer), rest = NULL);
 	rest = ft_strdup(buffer + i);
 	if (!i)

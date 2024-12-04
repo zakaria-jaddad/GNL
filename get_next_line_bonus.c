@@ -6,11 +6,10 @@
 /*   By: zajaddad <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 11:59:07 by zajaddad          #+#    #+#             */
-/*   Updated: 2024/12/04 19:47:17 by zajaddad         ###   ########.fr       */
+/*   Updated: 2024/12/04 21:11:01 by zajaddad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line_bonus.h"
-#include <sys/syslimits.h>
 
 int	get_new_line_index(char *s)
 {
@@ -108,9 +107,7 @@ char	*get_next_line(int fd)
 	if (BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
 		return (free(rest[fd]), rest[fd] = NULL);
 	buffer = read_line(fd, rest[fd], &i);
-	if (buffer == NULL)
-		return (rest[fd] = NULL);
-	if (*buffer == 0)
+	if (buffer == NULL || *buffer == 0)
 		return (free(buffer), rest[fd] = NULL);
 	rest[fd] = ft_strdup(buffer + i);
 	if (!i)
