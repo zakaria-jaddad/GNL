@@ -1,0 +1,15 @@
+
+read -1
+❯ gcc main.c get_next_line.c get_next_line_utils.c -D BUFFER_SIZE=2147483648
+❯ ./a.out
+❯ gcc main.c get_next_line.c get_next_line_utils.c -D BUFFER_SIZE=2147483648000000010
+❯ ./a.out
+❯ gcc main.c get_next_line.c get_next_line_utils.c -D BUFFER_SIZE=2147483647
+❯ ./a.out
+04/12/2024
+04/12/2024
+04/12/2024
+04/12/2024
+04/12/2024
+04/12/2024
+

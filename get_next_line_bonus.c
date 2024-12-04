@@ -6,10 +6,11 @@
 /*   By: zajaddad <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 11:59:07 by zajaddad          #+#    #+#             */
-/*   Updated: 2024/11/24 19:57:57 by zajaddad         ###   ########.fr       */
+/*   Updated: 2024/12/04 19:47:17 by zajaddad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line_bonus.h"
+#include <sys/syslimits.h>
 
 int	get_new_line_index(char *s)
 {
@@ -73,21 +74,19 @@ char	*read_line(int fd, char *result, int *index)
 	char	*content;
 	int		n_bytes;
 
-	*index = get_new_line_index((content = result, result));
+	*index = get_new_line_index((content = result));
 	if (result && *index)
 		return (result);
 	while (1)
 	{
+		if ((size_t)BUFFER_SIZE > INT_MAX)
+			return (NULL);
 		buffer = (char *)malloc(((size_t)BUFFER_SIZE) + 1);
 		if (buffer == NULL)
 			return (free(content), NULL);
 		n_bytes = read(fd, buffer, BUFFER_SIZE);
 		if (n_bytes <= 0)
-		{
-			free(buffer);
-			result = NULL;
-			break ;
-		}
+			return (free((result = NULL, buffer)), content);
 		join_content(&content, buffer, n_bytes);
 		*index = get_new_line_index(content);
 		if (content == NULL || *index)
@@ -98,13 +97,13 @@ char	*read_line(int fd, char *result, int *index)
 
 char	*get_next_line(int fd)
 {
-	static char	*rest[10240] = {NULL};
+	static char	*rest[OPEN_MAX];
 	char		*buffer;
 	char		*line;
 	int			i;
 
 	i = 0;
-	if (fd < 0)
+	if (fd < 0 || fd > OPEN_MAX)
 		return (NULL);
 	if (BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
 		return (free(rest[fd]), rest[fd] = NULL);

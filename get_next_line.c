@@ -6,7 +6,7 @@
 /*   By: zajaddad <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 02:48:31 by zajaddad          #+#    #+#             */
-/*   Updated: 2024/11/24 19:51:35 by zajaddad         ###   ########.fr       */
+/*   Updated: 2024/12/04 19:44:44 by zajaddad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line.h"
@@ -73,21 +73,19 @@ char	*read_line(int fd, char *result, int *index)
 	char	*content;
 	int		n_bytes;
 
-	*index = get_new_line_index((content = result, result));
+	*index = get_new_line_index((content = result));
 	if (result && *index)
 		return (result);
 	while (1)
 	{
+		if ((size_t)BUFFER_SIZE > INT_MAX)
+			return (NULL);
 		buffer = (char *)malloc(((size_t)BUFFER_SIZE) + 1);
 		if (buffer == NULL)
 			return (free(content), NULL);
 		n_bytes = read(fd, buffer, BUFFER_SIZE);
 		if (n_bytes <= 0)
-		{
-			free(buffer);
-			result = NULL;
-			break ;
-		}
+			return (free((result = NULL, buffer)), content);
 		join_content(&content, buffer, n_bytes);
 		*index = get_new_line_index(content);
 		if (content == NULL || *index)
@@ -98,7 +96,7 @@ char	*read_line(int fd, char *result, int *index)
 
 char	*get_next_line(int fd)
 {
-	static char	*rest = NULL;
+	static char	*rest;
 	char		*buffer;
 	char		*line;
 	int			i;

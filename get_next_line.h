@@ -6,7 +6,7 @@
 /*   By: zajaddad <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 12:38:44 by zajaddad          #+#    #+#             */
-/*   Updated: 2024/11/24 19:20:09 by zajaddad         ###   ########.fr       */
+/*   Updated: 2024/12/04 19:20:21 by zajaddad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #  define BUFFER_SIZE 1
 # endif
 
-# include <fcntl.h>
+# include <limits.h>
 # include <stdlib.h>
 # include <unistd.h>
 
